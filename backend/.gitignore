@@ -1,0 +1,44 @@
+# Compiled class files
+*.class
+
+# Logs
+*.log
+
+# Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# IDEs
+/.idea/
+/*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env files
+.env
+*.env
+
+# App config sensitive profiles
+application-local.properties
+application-dev.properties
+application-test.properties
+application-invoice.properties
+application-prod.properties
+application-secrets.properties
+application.properties
+
+# Allow generic example to be committed
+!application-example.properties
+
+# Other config
+*.yml
+*.yaml
