@@ -1,0 +1,170 @@
+@use 'variables' as v;
+
+/** Media Queries **/
+@mixin phone {
+    @media (min-width: v.$breakpoint-phone) {
+        @content;
+    }
+}
+@mixin tablet {
+    @media (min-width: v.$breakpoint-tablet) {
+        @content;
+    }
+}
+@mixin desktop {
+    @media (min-width: v.$breakpoint-desktop) {
+        @content;
+    }
+}
+@mixin xl_desktop {
+    @media (min-width: v.$breakpoint-xl-desktop) {
+        @content;
+    }
+}
+
+@mixin button($bgColor, $textColor) {
+  background-color: $bgColor;
+  color: $textColor;
+  font-weight: v.$font-weight-bold;
+  border: none;
+  transition: background-color .3s;
+  text-align: center;
+  display: inline-block;
+  
+  // Estilos móvil por defecto (más compactos)
+  padding: 0.75rem 1.5rem;
+  font-size: 1.4rem;
+  width: 100%;
+
+  // Estilos tablet/desktop
+  @include tablet {
+    padding: 1.5rem 4rem;
+    font-size: 1.8rem;
+  }
+
+  &:hover {
+    background-color: darken($bgColor, 10%);
+  }
+}
+
+
+@mixin grid($columns, $gap) {
+  display: grid;
+  gap: $gap;
+  grid-template-columns: repeat($columns, 1fr);
+}
+
+@mixin container-lg {
+  width: min(95%, 220rem);
+  margin: 0 auto;
+}
+
+@mixin container {
+  width: min(95%, 120rem);
+  margin: 0 auto;
+}
+
+@mixin container-md {
+  width: min(95%, 80rem);
+  margin: 0 auto;
+}
+
+@mixin container-sm {
+  width: min(95%, 60rem);
+  margin: 0 auto;
+}
+
+@mixin headings {
+  font-family: v.$font-family-base;
+  font-weight: v.$font-weight-heavy; 
+}
+
+@mixin page-name {
+  @include headings;
+  text-align: center;
+}
+
+@mixin page-description {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: v.$font-weight-thin;
+  color: v.$text-color;
+  margin-bottom: 1rem;
+}
+
+@mixin fluid-text($min, $max) {
+  font-size: clamp($min, -0.8rem + 10vw, $max);
+}
+
+@mixin gradient-text($start, $end) {
+  background: linear-gradient(to right, $start, $end);
+  background-clip: text;
+  color: transparent;
+}
+
+@mixin logo {
+  color: v.$white;
+  text-align: center;
+  margin-bottom: 2rem;
+  white-space: nowrap;
+  @include desktop{
+    text-align: left;
+    margin: 0;
+  }
+}
+
+@mixin link {
+  all: unset;
+  color: v.$white;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  font-weight: v.$bold;
+
+  &:hover {
+    color: v.$color-primary;
+    cursor: pointer;
+  }
+}
+
+@mixin shadow {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0,0,0,0.3) 0px 8px 16px -8px;
+}
+
+@mixin reset-list{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@mixin tags {
+  @include reset-list;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+
+  > li {
+    background-color: v.$color-primary;
+    padding: 1rem;
+    border-radius: .5rem;
+    font-size: 1.4rem;
+    font-weight: v.$bold;
+    color: v.$white;
+  }
+}
+
+@mixin card {
+  border: 1px solid lighten(v.$gray-50, 10);
+  padding: 3rem;
+
+  &__name {
+    font-weight: v.$heavy;
+    font-size: 2.6rem;
+    margin: 2rem 0;
+  }
+}
+
+@mixin bg-gradient($bgColor) {
+  background-image: linear-gradient(to left top, $bgColor, lighten($bgColor, 15%));
+}
+

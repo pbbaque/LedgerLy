@@ -1,0 +1,96 @@
+<div class="page">
+  <app-alert
+    [message]="errorMessage"
+    type="error"
+    [visible]="errorVisible"
+    (closed)="errorVisible = false"
+  ></app-alert>
+
+  <div class="page__header">
+    <h2 class="page__name">{{ isEdit ? 'Editar Factura' : 'Nueva Factura' }}</h2>
+    <p class="page__description">
+      Completa los datos de la factura. Los totales se recalculan automáticamente.
+    </p>
+  </div>
+
+  <div class="page__content">
+    <form (ngSubmit)="save()" #invoiceForm="ngForm" class="invoice-form">
+      <div class="form__grid">
+        <div class="form__group">
+          <label>Empresa</label>
+          <select name="company" required [(ngModel)]="invoice.company" (change)="onCompanyChange()">
+            <option *ngFor="let c of companies" [ngValue]="c">{{ c.name }}</option>
+          </select>
+        </div>
+
+        <div class="form__group">
+          <label>Cliente</label>
+          <select name="client" required [(ngModel)]="invoice.client">
+            <option *ngFor="let cl of clients" [ngValue]="cl">{{ cl.name }} {{ cl.lastname }}</option>
+          </select>
+        </div>
+
+        <div class="form__group">
+          <label>Empleado</label>
+          <select name="employee" required [(ngModel)]="invoice.employee">
+            <option *ngFor="let e of employees" [ngValue]="e">{{ e.name }}</option>
+          </select>
+        </div>
+
+        <div class="form__group">
+          <label>Fecha</label>
+          <input type="date" name="date" required [(ngModel)]="invoice.date" />
+        </div>
+
+        <div class="form__group full">
+          <label>Descripción</label>
+          <textarea name="description" [(ngModel)]="invoice.description"></textarea>
+        </div>
+      </div>
+
+      <h3>Detalles</h3>
+      <table class="invoice-details">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio U.</th>
+            <th>Importe</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of invoice.details; let i = index">
+            <td>
+              <select name="product-{{i}}" [(ngModel)]="d.product" (change)="onProductChange(i)">
+                <option [ngValue]="null">-- seleccionar --</option>
+                <option *ngFor="let p of products" [ngValue]="p">{{ p.name }}</option>
+              </select>
+            </td>
+            <td><input type="number" min="0" name="qty-{{i}}" [(ngModel)]="d.quantity" (input)="onDetailChange(i)" /></td>
+            <td><input type="number" min="0" step="0.01" name="price-{{i}}" [(ngModel)]="d.unitPrice" (input)="onDetailChange(i)" /></td>
+            <td>{{ (d.quantity * d.unitPrice) | currency }}</td>
+            <td>
+              <button type="button" class="btn btn--error" (click)="removeDetail(i)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="details-actions">
+        <button type="button" class="btn btn--secondary" (click)="addDetail()">Añadir línea</button>
+      </div>
+
+      <div class="invoice-summary-bottom">
+        <div>Subtotal: {{ subtotal | currency }}</div>
+        <div>Impuestos: {{ tax | currency }}</div>
+        <div class="invoice-total">Total: {{ totalInvoice | currency }}</div>
+      </div>
+
+      <div class="form__actions">
+        <button class="btn" type="submit" [disabled]="invoiceForm.invalid">Guardar</button>
+        <button class="btn btn--secondary" type="button" (click)="cancel()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

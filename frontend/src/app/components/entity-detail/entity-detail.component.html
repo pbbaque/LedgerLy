@@ -1,0 +1,19 @@
+<div class="detail__overlay" *ngIf="visible" (click)="onCloseButtonClick()">
+  <div class="detail__card" (click)="$event.stopPropagation()">
+    <div class="detail__header">
+      <h2 class="detail__title">{{ config.title }}</h2>
+      <button class="detail__close btn--secondary" (click)="onCloseButtonClick()">✕</button>
+    </div>
+
+    <div class="detail__content">
+      <div class="detail__field" *ngFor="let field of config.fields">
+        <strong>{{ field.label }}:</strong>
+        <span>{{ getValueByPath(entity, field.key) }}</span>
+      </div>
+    </div>
+
+    <div class="detail__actions">
+      <button class="btn" (click)="onCloseButtonClick()">Cerrar</button>
+    </div>
+  </div>
+</div>

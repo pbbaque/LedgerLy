@@ -1,0 +1,7 @@
+<div *ngIf="visible" class="confirm" [ngClass]="'confirm--' + type">
+  <span class="confirm__message">{{ message }}</span>
+  <div class="confirm__actions">
+    <button class="btn btn--success" (click)="confirm()">Aceptar</button>
+    <button class="btn btn--error" (click)="cancel()">Cancelar</button>
+  </div>
+</div>

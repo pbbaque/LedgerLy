@@ -1,0 +1,86 @@
+<div class="page">
+  <app-alert
+    [message]="errorMessage"
+    type="error"
+    [visible]="errorVisible"
+    (closed)="errorVisible = false"
+  ></app-alert>
+
+  <div class="page__header">
+    <h2 class="page__name">Listado de Productos</h2>
+    <p class="page__description">
+      Aquí puedes consultar todos los productos disponibles en el sistema.
+    </p>
+  </div>
+
+  <div class="page__actions">
+    <div class="page__search">
+      <input
+        type="text"
+        class="search__input"
+        placeholder="Buscar producto..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="searchProducts()"
+      />
+    </div>
+    <button class="btn btn--secondary" (click)="goToCreate()">
+      Añadir Producto
+    </button>
+  </div>
+
+  <div class="page__content">
+    <div *ngIf="noResults" class="no-results">No se encontraron productos.</div>
+
+    <ng-container *ngFor="let company of groupedCompanyNames">
+      <div class="products__group">
+        <div class="products__group__company">{{ company }}</div>
+        <swiper-container
+          *ngIf="isMobile"
+          [slidesPerView]="1"
+          [spaceBetween]="16"
+          class="products__group__cards"
+        >
+          <swiper-slide *ngFor="let product of groupedProducts[company]">
+            <app-product-card
+              (click)="openDetail(product)"
+              [product]="product"
+              (edit)="goToEdit($event)"
+              (delete)="deleteProduct($event)"
+            ></app-product-card>
+          </swiper-slide>
+        </swiper-container>
+
+        <div *ngIf="!isMobile" class="products__group__cards">
+          <app-product-card
+            *ngFor="let product of groupedProducts[company]"
+            (click)="openDetail(product)"
+            [product]="product"
+            (edit)="goToEdit($event)"
+            (delete)="deleteProduct($event)"
+          ></app-product-card>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #noProducts>
+      <div class="no-results">No se encontraron productos.</div>
+    </ng-template>
+  </div>
+</div>
+
+<app-confirm
+  [visible]="showConfirmDelete"
+  [message]="confirmMessage"
+  type="warning"
+  (confirmed)="confirmDelete()"
+  (cancelled)="cancelDelete()"
+>
+</app-confirm>
+
+<app-entity-detail
+  [entity]="selectedProduct"
+  [config]="productDetailConfig"
+  [visible]="detailVisible"
+  (closed)="closeDetail()"
+>
+</app-entity-detail>

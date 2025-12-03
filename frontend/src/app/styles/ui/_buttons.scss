@@ -1,0 +1,51 @@
+@use '../variables' as v;
+@use '../mixins' as m;
+
+.button-primary {
+    @include m.button(v.$color-primary, v.$white);
+
+    &:focus {
+        outline: 2px solid v.$color-focus;
+        outline-offset: 2px;
+    }
+}
+
+.button-secondary {
+    @include m.button(v.$color-secondary, v.$white);
+
+    &:focus {
+        outline: 2px solid v.$color-focus;
+        outline-offset: 2px;
+    }
+}
+
+.button-accent {
+    @include m.button(v.$color-accent, v.$white);
+
+    &:focus {
+        outline: 2px solid v.$color-focus;
+        outline-offset: 2px;
+    }
+}
+
+.button-danger {
+    @include m.button(v.$color-error, v.$white);
+
+    &:focus {
+        outline: 2px solid v.$color-focus;
+        outline-offset: 2px;
+    }
+}
+
+.button-outline {
+    @include m.button(transparent, v.$color-primary);
+    
+    &:hover {
+        background-color: rgba(74, 106, 138, 0.1);
+    }
+
+    &:focus {
+        outline: 2px solid v.$color-focus;
+        outline-offset: 2px;
+    }
+}

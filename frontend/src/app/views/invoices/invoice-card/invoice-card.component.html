@@ -1,0 +1,34 @@
+<div class="invoice-card" (click)="onOpenDetail()">
+  <div class="invoice-card__header">
+    <h4 class="invoice-card__id">Factura #{{ invoice.id }}</h4>
+    <span class="invoice-card__date">{{ invoice.date | date: 'dd/MM/yyyy' }}</span>
+  </div>
+
+  <p class="invoice-card__client">
+    <strong>Cliente:</strong> {{ invoice.client.name }}
+  </p>
+
+  <p class="invoice-card__employee">
+    <strong>Empleado:</strong> {{ invoice.employee.name }}
+  </p>
+
+  <p class="invoice-card__company">
+    <strong>Empresa:</strong> {{ invoice.company.name }}
+  </p>
+
+  <p class="invoice-card__description" *ngIf="invoice.description">
+    {{ invoice.description }}
+  </p>
+
+  <div class="invoice-card__footer">
+    <div class="invoice-card__total">
+      <span>Total:</span>
+      <strong>{{ invoice.total | currency }}</strong>
+    </div>
+
+    <div class="invoice-card__actions">
+      <button class="btn btn--warning" (click)="onEdit($event)">Editar</button>
+      <button class="btn btn--error" (click)="onDelete($event)" *ngIf="hasRole(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_COMPANY_SUPER_ADMIN', 'ROLE_COMPANY_ADMIN'])">Eliminar</button>
+    </div>
+  </div>
+</div>

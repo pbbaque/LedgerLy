@@ -1,0 +1,58 @@
+@use "index" as *;
+
+.not-found {
+  @include container;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: $background-muted;
+
+  &__content {
+    background-color: $white;
+    padding: 4rem 2rem;
+    border-radius: 1rem;
+    @include shadow;
+
+    max-height: 40vh;
+    overflow-y: auto;
+
+    @include tablet {
+      max-height: 65vh;
+      padding: 6rem 8rem;
+    }
+
+    @include xl_desktop {
+      max-height: 70vh;
+      padding: 6rem 8rem;
+    }
+  }
+
+  &__code {
+    @include gradient-text($color-secondary, $color-primary);
+    @include fluid-text(6rem, 14rem);
+    font-weight: $font-weight-heavy;
+    margin: 0;
+    line-height: 1;
+  }
+
+  &__title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    margin: 2rem 0 1rem;
+  }
+
+  &__description {
+    font-size: $font-size-md;
+    color: $gray-600;
+    margin-bottom: 3rem;
+  }
+
+  &__button {
+    @include button($color-primary, $white);
+    width: fit-content;
+    margin: 0 auto;
+  }
+}

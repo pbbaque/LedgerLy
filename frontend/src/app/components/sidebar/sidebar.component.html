@@ -1,0 +1,56 @@
+<button class="hamburger" (click)="toggleSidebar()">☰</button>
+<div class="overlay" *ngIf="sidebarOpen" (click)="toggleSidebar()"></div>
+<aside class="sidebar" [class.sidebar--open]="sidebarOpen">
+  <nav class="sidebar__nav">
+    <ul class="sidebar__nav-list">
+      <li class="sidebar__nav-item">
+        <a routerLink="/dashboard" routerLinkActive="sidebar__nav-link--active" class="sidebar__nav-link" (click)="closeSidebar()">
+          <span class="sidebar__icon sidebar__icon--dashboard"></span>
+          Dashboard
+        </a>
+      </li>
+
+      <li class="sidebar__nav-item" *ngIf="hasRole(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_COMPANY_SUPER_ADMIN', 'ROLE_COMPANY_ADMIN'])">
+        <a routerLink="/users" routerLinkActive="sidebar__nav-link--active" class="sidebar__nav-link" (click)="closeSidebar()">
+          <span class="sidebar__icon sidebar__icon--users"></span>
+          Usuarios
+        </a>
+      </li>
+
+      <li class="sidebar__nav-item" *ngIf="hasRole(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN'])">
+        <a routerLink="/companies" routerLinkActive="sidebar__nav-link--active" class="sidebar__nav-link" (click)="closeSidebar()">
+          <span class="sidebar__icon sidebar__icon--company"></span>
+          Empresas
+        </a>
+      </li>
+
+      <li class="sidebar__nav-item" *ngIf="hasRole(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_COMPANY_SUPER_ADMIN', 'ROLE_COMPANY_ADMIN'])">
+        <a routerLink="/employees" routerLinkActive="sidebar__nav-link--active" class="sidebar__nav-link" (click)="closeSidebar()">
+          <span class="sidebar__icon sidebar__icon--employees"></span>
+          Empleados
+        </a>
+      </li>
+
+      <li class="sidebar__nav-item" *ngIf="hasRole(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_COMPANY_SUPER_ADMIN', 'ROLE_COMPANY_ADMIN', 'ROLE_USER'])">
+        <a routerLink="/invoices" routerLinkActive="sidebar__nav-link--active" class="sidebar__nav-link" (click)="closeSidebar()">
+          <span class="sidebar__icon sidebar__icon--invoices"></span>
+          Facturas
+        </a>
+      </li>
+
+      <li class="sidebar__nav-item" *ngIf="hasRole(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_COMPANY_SUPER_ADMIN', 'ROLE_COMPANY_ADMIN', 'ROLE_USER'])">
+        <a routerLink="/clients" routerLinkActive="sidebar__nav-link--active" class="sidebar__nav-link" (click)="closeSidebar()">
+          <span class="sidebar__icon sidebar__icon--clients"></span>
+          Clientes
+        </a>
+      </li>
+
+      <li class="sidebar__nav-item" *ngIf="hasRole(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_COMPANY_SUPER_ADMIN', 'ROLE_COMPANY_ADMIN', 'ROLE_USER'])">
+        <a routerLink="/products" routerLinkActive="sidebar__nav-link--active" class="sidebar__nav-link" (click)="closeSidebar()">
+          <span class="sidebar__icon sidebar__icon--products"></span>
+          Productos
+        </a>
+      </li>
+    </ul>
+  </nav>
+</aside>

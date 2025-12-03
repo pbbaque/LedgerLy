@@ -1,0 +1,22 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+
+ 
+
+  &__link {
+    color: v.$black;
+    font-size: 1.4rem;
+    font-weight: v.$font-weight-thin;
+
+    &:hover {
+      color: v.$color-secondary;
+    }
+  }
+}

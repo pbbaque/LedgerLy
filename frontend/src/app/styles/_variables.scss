@@ -1,0 +1,70 @@
+// --------------------------------------
+// Typography
+// --------------------------------------
+$font-family-base: 'Segoe UI', Roboto, sans-serif;
+
+$font-size-xs: 1.2rem;
+$font-size-sm: 1.4rem;
+$font-size-base: 1.6rem;
+$font-size-md: 1.8rem;
+$font-size-lg: 2.2rem;
+$font-size-xl: 2.6rem;
+$font-size-xxl: 3rem;
+
+
+$font-weight-thin: 300;
+$font-weight-regular: 400;
+$font-weight-bold: 700;
+$font-weight-heavy: 900;
+
+// --------------------------------------
+// Breakpoints (Media Queries)
+// --------------------------------------
+$breakpoint-phone: 480px;
+$breakpoint-tablet: 1200px;
+$breakpoint-desktop: 1800px;
+$breakpoint-xl-desktop: 2000px;
+
+// --------------------------------------
+// Base Colors
+// --------------------------------------
+$color-primary: #4a6a8a;
+$color-secondary: #2980b9;
+$color-accent: #32CD32;
+
+$color-success: #4caf50;
+$color-info: #3498db;
+$color-warning: #f39c12;
+$color-error: #e74c3c;
+
+// Interaction
+$color-hover: darken($color-primary, 10%);
+$color-focus: lighten($color-secondary, 10%);
+
+// --------------------------------------
+// Greyscale & Neutrals
+// --------------------------------------
+$white: #FFFFFF;
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+$black: #1a1b15;
+
+// --------------------------------------
+// Text
+// --------------------------------------
+$text-color: #212529;
+$text-muted: $gray-600;
+
+// --------------------------------------
+// Backgrounds
+// --------------------------------------
+$background-default: $white;
+$background-muted: $gray-50;

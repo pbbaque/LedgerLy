@@ -1,0 +1,50 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  &__item {
+    @include m.shadow;
+    background-color: v.$white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+
+    &-header {
+      font-weight: v.$font-weight-bold;
+      font-size: v.$font-size-lg;
+      color: v.$color-primary;
+    }
+
+    &-details {
+      font-size: v.$font-size-base;
+      color: v.$gray-600;
+    }
+
+    &-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+  }
+  &__title {
+    font-weight: v.$font-weight-bold;
+    margin-bottom: 0.4rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid v.$gray-300;
+  }
+
+  &__subtitle {
+    color: v.$gray-600;
+  }
+
+  @include m.tablet {
+    display: none;
+  }
+}

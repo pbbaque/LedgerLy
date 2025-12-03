@@ -1,0 +1,158 @@
+<div class="page">
+  <app-alert
+    [message]="errorMessage"
+    type="error"
+    [visible]="errorVisible"
+    (closed)="errorVisible = false"
+  >
+  </app-alert>
+  <div class="page__header">
+    <h2 class="page__name">
+      {{ isEditMode ? "Editar Producto" : "Nuevo Producto" }}
+    </h2>
+    <p class="page__description">
+      {{
+        isEditMode
+          ? "Aquí puedes modificar los datos del producto."
+          : "Aquí puedes registrar un nuevo producto en el sistema."
+      }}
+    </p>
+  </div>
+
+  <div class="page__content">
+    <form class="form" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="form__content">
+        <div class="form__group--row">
+          <div class="form__field">
+            <label for="name" class="form__label">Nombre</label>
+            <input
+              type="text"
+              class="form__input"
+              placeholder="Nombre del producto"
+              id="name"
+              formControlName="name"
+            />
+            <small class="form__error" *ngIf="name?.touched && name?.invalid">
+              <span *ngIf="name?.errors?.['required']"
+                >El nombre es obligatorio</span
+              >
+              <span *ngIf="name?.errors?.['name']"
+                >Formato de nombre inválido</span
+              >
+            </small>
+          </div>
+
+          <div class="form__field">
+            <label for="description" class="form__label">Descripción</label>
+            <input
+              type="text"
+              class="form__input"
+              placeholder="Descripción del producto"
+              id="description"
+              formControlName="description"
+            />
+            <small
+              class="form__error"
+              *ngIf="description?.touched && description?.invalid"
+            >
+              <span *ngIf="description?.errors?.['required']"
+                >La descripción es obligatoria</span
+              >
+              <span *ngIf="description?.errors?.['description']"
+                >Formato de descripción inválido</span
+              >
+            </small>
+          </div>
+        </div>
+        <div class="form__group--row">
+          <div class="form__field">
+            <label for="price" class="form__label">Precio</label>
+            <input
+              type="number"
+              class="form__input"
+              placeholder="Precio del producto"
+              id="price"
+              formControlName="price"
+            />
+            <small class="form__error" *ngIf="price?.touched && price?.invalid">
+              <span *ngIf="price?.errors?.['required']"
+                >El precio es obligatorio</span
+              >
+              <span *ngIf="price?.errors?.['price']"
+                >Formato de precio inválido</span
+              >
+            </small>
+          </div>
+
+          <div class="form__field">
+            <label for="sku" class="form__label">SKU</label>
+            <input
+              type="text"
+              class="form__input"
+              placeholder="Codigo del producto"
+              id="sku"
+              formControlName="sku"
+            />
+            <small class="form__error" *ngIf="sku?.touched && sku?.invalid">
+              <span *ngIf="sku?.errors?.['required']"
+                >El telefono es obligatorio</span
+              >
+              <span *ngIf="sku?.errors?.['sku']">Formato de sku inválido</span>
+            </small>
+          </div>
+        </div>
+        <div class="form__group--row">
+          <div class="form__field">
+            <label for="stock" class="form__label">Stock</label>
+            <input
+              type="number"
+              class="form__input"
+              placeholder="Cantidad en stock"
+              id="stock"
+              formControlName="stock"
+            />
+            <small class="form__error" *ngIf="stock?.touched && stock?.invalid">
+              <span *ngIf="stock?.errors?.['required']"
+                >El stock es obligatorio</span
+              >
+              <span *ngIf="stock?.errors?.['stock']"
+                >Formato de stock inválido</span
+              >
+            </small>
+          </div>
+          <div *ngIf="isAdmin" class="form__field" formGroupName="company">
+            <label for="companyId" class="form__label">Compañía</label>
+            <select id="companyId" class="form__input" formControlName="id">
+              <option value="null" disabled>Seleccione una compañía</option>
+              <option *ngFor="let company of companies" [value]="company.id">
+                {{ company.name }}
+              </option>
+            </select>
+            <small
+              *ngIf="company?.get('id')?.touched && company?.get('id')?.invalid"
+              class="form__error"
+            >
+              <span *ngIf="company?.get('id')?.errors?.['required']"
+                >La compañía es obligatoria</span
+              >
+            </small>
+          </div>
+          
+        </div>
+      </div>
+      <div class="form__group--row">
+        <input
+          type="submit"
+          class="form__submit"
+          [value]="isEditMode ? 'Guardar Cambios' : 'Registrar Producto'"
+        />
+        <input
+          type="button"
+          class="form__return"
+          value="Volver"
+          (click)="goBack()"
+        />
+      </div>
+    </form>
+  </div>
+</div>

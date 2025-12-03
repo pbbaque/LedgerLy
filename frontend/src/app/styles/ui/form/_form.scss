@@ -1,0 +1,63 @@
+@use "variables" as v;
+@use "mixins" as m;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__label {
+    font-size: v.$font-size-base;
+    color: rgba(v.$black, 0.8);
+  }
+
+  &__input {
+    padding: 1rem;
+    border: 1px solid darken(v.$gray-600, 20);
+    border-radius: 0.5rem;
+    font-size: 1.4rem;
+  }
+
+  &__remember {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.4rem;
+    color: rgba(v.$black, 0.8);
+
+    input[type="checkbox"] {
+      width: 1.6rem;
+      height: 1.6rem;
+      accent-color: v.$color-primary;
+      cursor: pointer;
+    }
+
+    label {
+      cursor: pointer;
+      user-select: none;
+    }
+  }
+
+  &__submit {
+    @include m.button(v.$color-primary, v.$white);
+    margin-top: 2rem;
+    font-size: 1.6rem;
+  }
+
+  &__return {
+    @include m.button(v.$color-error, v.$white);
+    margin-top: 2rem;
+    font-size: 1.6rem;
+  }
+
+  &__error {
+    color: v.$color-error;
+    font-size: 1.2rem;
+  }
+}

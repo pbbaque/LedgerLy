@@ -1,0 +1,44 @@
+<header class="header">
+  <div class="header__left">
+    <div class="header__logo">
+      <h1 class="header__logo__text">
+        Ledger<span class="header__logo--accent">Ly</span>
+      </h1>
+    </div>
+  </div>
+
+  <div class="header__right">
+    <div class="header__profile">
+      <img
+        src="assets/avatar_64.png"
+        alt="User Avatar"
+        class="header__avatar"
+      />
+      <span class="header__username">Admin</span>
+    </div>
+
+    <button class="header__icon-btn" aria-label="CurrentCompany" (click)="openCompanyProfile()" *ngIf="hasRole(['ROLE_COMPANY_SUPER_ADMIN', 'ROLE_COMPANY_ADMIN'])">
+      <span class="header__icon header__icon--company"></span>
+    </button>
+
+    <button class="header__icon-btn" aria-label="Contact" (click)="openUserProfile()">
+      <span class="header__icon header__icon--contact"></span>
+    </button>
+
+    <button
+      class="header__icon-btn header__icon-btn--logout"
+      aria-label="Logout"
+      (click)="onLogout()"
+    >
+      <span class="header__icon header__icon--logout"></span>
+    </button>
+  </div>
+</header>
+
+<app-confirm
+  [visible]="showConfirmLogout"
+  message="¿Está seguro de que desea cerrar sesión?"
+  type="warning"
+  (confirmed)="confirmLogout()"
+  (cancelled)="cancelLogout()">
+</app-confirm>

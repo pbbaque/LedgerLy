@@ -1,0 +1,164 @@
+@use "index" as *;
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: $color-primary;
+  padding: 1rem;
+  color: $white;
+  font-family: $font-family-base;
+
+  @include tablet {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 1rem;
+
+    @include tablet {
+      justify-content: flex-start;
+      margin-bottom: 0;
+      width: auto;
+    }
+  }
+
+  &__logo {
+    font-weight: $font-weight-heavy;
+    user-select: none;
+
+    &--accent {
+      color: $color-accent;
+    }
+    &__text {
+      margin: 0;
+
+      @include tablet {
+        font-size: 5rem;
+      }
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    gap: 1rem;
+
+    @include tablet {
+      width: auto;
+      gap: 2rem;
+      justify-content: flex-end;
+    }
+  }
+
+  &__icon-btn {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $white;
+    font-size: 1.6rem;
+    padding: 0.3rem;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      color: $color-accent;
+    }
+
+    @include tablet {
+      font-size: 1.8rem;
+      padding: 0.4rem;
+    }
+  }
+
+  &__icon-btn--logout {
+    .header__icon {
+      filter: invert(38%) sepia(92%) saturate(3922%) hue-rotate(352deg)
+        brightness(100%) contrast(98%);
+    }
+
+    &:hover .header__icon {
+      filter: invert(38%) sepia(92%) saturate(3922%) hue-rotate(352deg)
+        brightness(85%) contrast(105%);
+    }
+  }
+
+  &__badge {
+    position: absolute;
+    top: -5px;
+    right: -7px;
+    background-color: $color-error;
+    color: $white;
+    font-size: 0.9rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 50%;
+    font-weight: $font-weight-bold;
+  }
+
+  &__icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+
+    @include tablet {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+
+  &__icon--company { 
+    background-image: url('/assets/icons/company.svg'); 
+  }
+
+  &__icon--contact {
+    background-image: url("/assets/icons/contact.svg");
+  }
+
+  &__icon--logout {
+    background-image: url("/assets/icons/logout.svg");
+  }
+
+  &__profile {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+
+    @include tablet {
+      gap: 1rem;
+    }
+
+    &__avatar {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid $white;
+
+      @include tablet {
+        width: 2.8rem;
+        height: 2.8rem;
+      }
+    }
+
+    &__username {
+      font-weight: $font-weight-bold;
+      font-size: $font-size-xs;
+
+      @include tablet {
+        font-size: $font-size-sm;
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+.alert {
+  padding: 1rem;
+  border-radius: 4px;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  min-width: 250px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+
+  &--success { background-color: #4caf50; }
+  &--error { background-color: #f44336; }
+  &--info { background-color: #2196f3; }
+  &--warning { background-color: #ff9800; }
+
+  &__close {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+}

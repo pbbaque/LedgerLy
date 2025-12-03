@@ -1,0 +1,90 @@
+<div class="page">
+  <app-alert
+    [message]="errorMessage"
+    type="error"
+    [visible]="errorVisible"
+    (closed)="errorVisible = false"
+  ></app-alert>
+
+  <div class="page__header">
+    <h2 class="page__name">Mi Perfil</h2>
+    <p class="page__description">
+      Aquí puedes actualizar tus datos de usuario y contraseña.
+    </p>
+  </div>
+
+  <div class="page__content">
+    <form class="form" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="form__content">
+        <div class="form__group--row">
+          <div class="form__field">
+            <label for="username" class="form__label">Usuario</label>
+            <input
+              type="text"
+              class="form__input"
+              id="username"
+              placeholder="Nombre de usuario"
+              formControlName="username"
+            />
+            <small class="form__error" *ngIf="username?.touched && username?.invalid">
+              <span *ngIf="username?.errors?.['required']">El usuario es obligatorio</span>
+            </small>
+          </div>
+
+          <div class="form__field">
+            <label for="email" class="form__label">Email</label>
+            <input
+              type="email"
+              class="form__input"
+              id="email"
+              placeholder="Email"
+              formControlName="email"
+            />
+            <small class="form__error" *ngIf="email?.touched && email?.invalid">
+              <span *ngIf="email?.errors?.['required']">El email es obligatorio</span>
+              <span *ngIf="email?.errors?.['email']">Formato de email inválido</span>
+            </small>
+          </div>
+        </div>
+
+        <div class="form__group--row">
+          <div class="form__field">
+            <label for="password" class="form__label">Contraseña</label>
+            <input
+              type="password"
+              class="form__input"
+              id="password"
+              placeholder="Contraseña"
+              formControlName="password"
+            />
+          </div>
+
+          <div class="form__field">
+            <label for="repeat" class="form__label">Repite la contraseña</label>
+            <input
+              type="password"
+              class="form__input"
+              id="repeat"
+              placeholder="Repite la contraseña"
+              formControlName="repeat"
+            />
+          </div>
+        </div>
+
+        <div class="form__group--row">
+          <input
+            type="submit"
+            class="form__submit"
+            value="Guardar Cambios"
+          />
+          <input
+            type="button"
+            class="form__return"
+            value="Volver"
+            (click)="onReturn()"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

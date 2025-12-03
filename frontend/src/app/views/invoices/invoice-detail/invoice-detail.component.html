@@ -1,0 +1,52 @@
+<div class="invoice-detail" *ngIf="visible">
+  <div class="invoice-detail__overlay" (click)="close()"></div>
+
+  <div class="invoice-detail__panel">
+    <header class="invoice-detail__header">
+      <h2>Factura #{{ invoice!.id }}</h2>
+      <span class="invoice-detail__date">{{ invoice!.date | date: 'dd/MM/yyyy' }}</span>
+    </header>
+
+    <section class="invoice-detail__info">
+      <div><strong>Cliente:</strong> {{ invoice!.client.name }}</div>
+      <div><strong>Empleado:</strong> {{ invoice!.employee.name }}</div>
+      <div><strong>Empresa:</strong> {{ invoice!.company.name }}</div>
+      <div *ngIf="invoice!.description"><strong>Descripción:</strong> {{ invoice!.description }}</div>
+    </section>
+
+    <section class="invoice-detail__table" *ngIf="invoice!.details?.length">
+      <h3>Detalles</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cant.</th>
+            <th>Precio U.</th>
+            <th>Importe</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of invoice!.details">
+            <td>{{ d.product.name }}</td>
+            <td>{{ d.quantity }}</td>
+            <td>{{ d.unitPrice | currency }}</td>
+            <td>{{ d.amount | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="invoice-detail__totals">
+      <div class="total-row">
+        <span>Total:</span>
+        <strong>{{ invoice!.total | currency }}</strong>
+      </div>
+    </section>
+
+    <footer class="invoice-detail__actions">
+      <button class="btn btn--secondary" (click)="onEdit()">Editar</button>
+      <button class="btn btn--primary" (click)="onPrint()">Imprimir</button>
+      <button class="btn btn--error" (click)="close()">Cerrar</button>
+    </footer>
+  </div>
+</div>

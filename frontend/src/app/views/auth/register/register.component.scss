@@ -1,0 +1,53 @@
+@use "index" as *;
+
+.auth {
+  @include container;
+  width: 100%;
+  padding: 2rem;
+
+  &__logo {
+    font-weight: $font-weight-heavy;
+    user-select: none;
+    text-align: center;
+    margin: 1rem 0;
+
+    &__text {
+      font-size: 3rem;
+
+      @include tablet {
+        font-size: 5rem;
+      }
+    }
+
+    &--accent {
+      color: $color-accent;
+    }
+  }
+
+  &__text {
+    text-align: center;
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+
+    @include tablet {
+      font-size: 1.8rem;
+    }
+  }
+
+  &--register {
+    .form__group--row {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .form__field {
+        flex: 1;
+      }
+
+      @include tablet {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+  }
+}

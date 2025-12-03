@@ -1,0 +1,8 @@
+@use 'styles/index' as *;
+
+:host {
+  display: block;
+  background-color: $background-muted; 
+  color: $text-color;
+  font-family: $font-family-base;
+}

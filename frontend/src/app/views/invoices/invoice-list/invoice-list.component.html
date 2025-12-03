@@ -1,0 +1,99 @@
+<div class="page">
+  <app-alert
+    [message]="errorMessage"
+    type="error"
+    [visible]="errorVisible"
+    (closed)="errorVisible = false"
+  ></app-alert>
+
+  <div class="page__header">
+    <h2 class="page__name">Facturas</h2>
+    <p class="page__description">
+      Consulta, filtra y gestiona las facturas emitidas por tus empresas.
+    </p>
+  </div>
+
+  <div class="invoice-summary" *ngIf="invoices?.length">
+    <div class="summary__card">
+      <h3>Total facturado</h3>
+      <p>{{ totalAmount | currency }}</p>
+    </div>
+    <div class="summary__card">
+      <h3>Facturas</h3>
+      <p>{{ filteredInvoices.length }}</p>
+    </div>
+    <div class="summary__card">
+      <h3>Promedio</h3>
+      <p>{{ averageAmount | currency }}</p>
+    </div>
+    <div class="summary__card">
+      <h3>Facturas pendientes</h3>
+      <p>{{ pendingCount }}</p>
+    </div>
+  </div>
+  <div class="page__content">
+    <div class="page__actions">
+      <div class="page__search filters">
+        <input
+          type="text"
+          class="search__input"
+          placeholder="Buscar por id, cliente, descripción..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="filterInvoices()"
+        />
+
+        <select [(ngModel)]="selectedCompanyId" (change)="filterInvoices()" *ngIf="hasRole(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_COMPANY_SUPER_ADMIN', 'ROLE_COMPANY_ADMIN'])">
+          <option value="">Todas las empresas</option>
+          <option *ngFor="let c of companies" [value]="c.id">
+            {{ c.name }}
+          </option>
+        </select>
+
+        <select [(ngModel)]="selectedClientId" (change)="filterInvoices()">
+          <option value="">Todos los clientes</option>
+          <option *ngFor="let cl of clients" [value]="cl.id">
+            {{ cl.name }}
+          </option>
+        </select>
+
+        <input type="date" [(ngModel)]="fromDate" (change)="filterInvoices()" />
+        <input type="date" [(ngModel)]="toDate" (change)="filterInvoices()" />
+      </div>
+
+      <div class="actions__buttons">
+        <button class="btn btn--secondary" (click)="goToCreate()">
+          Nueva Factura
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="noResults" class="no-results">No se encontraron facturas.</div>
+
+    <div class="invoice-list" *ngIf="!noResults">
+      <app-invoice-card
+        *ngFor="let inv of filteredInvoices"
+        [invoice]="inv"
+        (click)="openDetail(inv)"
+        (edit)="goToEdit($event)"
+        (delete)="deleteInvoice($event)"
+      ></app-invoice-card>
+    </div>
+  </div>
+</div>
+
+<app-confirm
+  [visible]="showConfirmDelete"
+  [message]="confirmMessage"
+  type="warning"
+  (confirmed)="confirmDelete()"
+  (cancelled)="cancelDelete()"
+>
+</app-confirm>
+
+<app-invoice-detail
+  [invoice]="selectedInvoice"
+  [visible]="detailVisible"
+  (closed)="closeDetail()"
+  (edit)="goToEdit($event)"
+  (print)="openInvoicePage($event)"
+></app-invoice-detail>

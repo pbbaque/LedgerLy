@@ -1,0 +1,107 @@
+# --------------------------------------
+# Angular compiled output
+# --------------------------------------
+/dist
+/tmp
+/out-tsc
+/bazel-out
+/.angular/cache
+/.angular/coverage
+
+# --------------------------------------
+# Node dependencies and lock files
+# --------------------------------------
+/node_modules
+/package-lock.json
+/yarn.lock
+/npm-debug.log*
+/yarn-error.log*
+
+# --------------------------------------
+# Build artifacts
+# --------------------------------------
+*.tgz
+*.gz
+*.zip
+
+# --------------------------------------
+# Testing
+# --------------------------------------
+/coverage
+/testem.log
+/junit.xml
+
+# --------------------------------------
+# System files
+# --------------------------------------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# --------------------------------------
+# Sass / SCSS cache
+# --------------------------------------
+.sass-cache/
+
+# --------------------------------------
+# TypeScript
+# --------------------------------------
+/typings
+*.tsbuildinfo
+
+# --------------------------------------
+# Editors and IDEs
+# --------------------------------------
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.code-workspace
+
+# Eclipse
+.project
+.classpath
+.settings/
+*.launch
+
+# Cloud9
+.c9/
+
+# VS Code History Plugin
+.history/
+
+# --------------------------------------
+# Environment files (customize if needed)
+# --------------------------------------
+src/environments/environment*.ts
+
+# --------------------------------------
+# Local backup files
+# --------------------------------------
+*.bak
+*.swp
+*.tmp
+*~
+
+# --------------------------------------
+# Log files
+# --------------------------------------
+*.log
+
+# --------------------------------------
+# NGRX store freeze debug
+# --------------------------------------
+store.freeze.*
+
+.env
+.env.local
+.env.production
+.env.development
+*.env

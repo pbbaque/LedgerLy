@@ -1,0 +1,64 @@
+@use 'index' as *;
+
+.product-card {
+  @include shadow;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  background-color: $white;
+
+  &__name {
+    font-weight: $font-weight-bold;
+    font-size: $font-size-md;
+    margin-bottom: 0.5rem;
+  }
+
+  &__description {
+    font-size: $font-size-sm;
+    color: $text-muted;
+    margin-bottom: 0.5rem;
+  }
+
+  &__code, &__price {
+    font-size: $font-size-xs;
+    color: $gray-700;
+  }
+}
+
+.btn {
+  @include button($color-primary, $white);
+  font-size: $font-size-sm;
+
+  &--secondary {
+    @include button($color-secondary, $white);
+  }
+
+  &--warning {
+    @include button($color-warning, $white);
+  }
+
+  &--error {
+    @include button($color-error, $white);
+  }
+}
+
+.list__actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  justify-content: center;
+
+  .btn {
+    padding: 0.75rem 1rem;
+    font-size: 1.4rem;
+    width: auto;
+    max-width: 20rem;
+    flex: 1;
+  }
+  
+  @include tablet {
+    .btn {
+      padding: 1rem 2rem;
+      font-size: 1.6rem;
+    }
+  }
+}

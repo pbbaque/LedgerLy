@@ -1,0 +1,32 @@
+@use 'index' as *;
+
+:host {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  background-color: $background-muted;
+  color: $text-color;
+  font-family: $font-family-base;
+}
+
+.app-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 0;
+  overflow: auto;
+  background-color: $background-default; 
+
+  @include tablet {
+    grid-template-columns: 25rem 1fr;
+  }
+}
+
+main.main-content {
+  flex-grow: 1;
+  padding: 1.5rem;
+
+  @include tablet {
+    padding: 1rem;
+  }
+}
+

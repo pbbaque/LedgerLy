@@ -1,0 +1,153 @@
+<div class="page">
+  <app-alert
+    [message]="errorMessage"
+    type="error"
+    [visible]="errorVisible"
+    (closed)="errorVisible = false"
+  >
+  </app-alert>
+  <div class="page__header">
+    <h2 class="page__name">Listado de Empresas</h2>
+    <p class="page__description">
+      Aquí puedes consultar todas las empresas registradas en el sistema.
+    </p>
+  </div>
+
+  <div class="page__actions">
+    <div class="page__search">
+      <input
+        type="text"
+        class="search__input"
+        placeholder="Buscar empresa..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="searchCompanies()"
+      />
+    </div>
+    <button class="btn btn--secondary" (click)="goToCreate()">
+      Añadir Empresa
+    </button>
+  </div>
+
+  <div class="page__content">
+    <div class="list__wrapper">
+      <app-pagination
+        *ngIf="paginatedCompanies.length > 0"
+        [currentPage]="currentPage"
+        [totalPages]="totalPages"
+        [itemsPerPage]="itemsPerPage"
+        [totalItems]="filteredCompanies.length"
+        (pageChange)="onPageChange($event)"
+        (itemsPerPageChange)="onItemsPerPageChange($event)"
+      ></app-pagination>
+      <ul class="list">
+        <li *ngIf="paginatedCompanies.length === 0" class="no-results">
+          No se encontraron empresas.
+        </li>
+        <li
+          class="list__item"
+          *ngFor="let company of paginatedCompanies"
+          (click)="openDetail(company)"
+        >
+          <p class="list__title">
+            {{ company.id }} - {{ company.name }} {{ company.fiscalNumber }}
+          </p>
+          <p class="list__subtitle">{{ company.email }}</p>
+          <div class="list__actions">
+            <button
+              class="btn btn--warning"
+              (click)="goToEdit(company.id); $event.stopPropagation()"
+            >
+              Editar
+            </button>
+            <button
+              class="btn btn--error"
+              (click)="deleteCompany(company); $event.stopPropagation()"
+              *ngIf="hasRole(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_COMPANY_SUPER_ADMIN', 'ROLE_COMPANY_ADMIN'])"
+            >
+              Eliminar
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="table__wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>NIF/CIF</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th class="table__actions-cell">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="paginatedCompanies.length === 0">
+            <td colspan="6" class="no-results">No se encontraron empresas.</td>
+          </tr>
+          <tr
+            *ngFor="let company of paginatedCompanies"
+            (click)="openDetail(company)"
+          >
+            <td>{{ company.id }}</td>
+            <td>{{ company.name }}</td>
+            <td>{{ company.fiscalNumber }}</td>
+            <td>{{ company.email }}</td>
+            <td>{{ formatPhone(company.address.country, company.phone) }}</td>
+            <td
+              class="table__address-cell"
+              [title]="formatAddress(company.address)"
+            >
+              {{ formatAddress(company.address) }}
+            </td>
+            <td class="table__actions-cell">
+              <div class="table__actions">
+                <button
+                  class="btn btn--warning"
+                  (click)="goToEdit(company.id); $event.stopPropagation()"
+                >
+                  Editar
+                </button>
+                <button
+                  class="btn btn--error"
+                  (click)="deleteCompany(company); $event.stopPropagation()"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <app-pagination
+        *ngIf="paginatedCompanies.length > 0"
+        [currentPage]="currentPage"
+        [totalPages]="totalPages"
+        [itemsPerPage]="itemsPerPage"
+        [totalItems]="filteredCompanies.length"
+        (pageChange)="onPageChange($event)"
+        (itemsPerPageChange)="onItemsPerPageChange($event)"
+      ></app-pagination>
+    </div>
+  </div>
+</div>
+
+<app-confirm
+  [visible]="showConfirmDelete"
+  [message]="confirmMessage"
+  type="warning"
+  (confirmed)="confirmDelete()"
+  (cancelled)="cancelDelete()"
+>
+</app-confirm>
+
+<app-entity-detail
+  [entity]="selectedCompany"
+  [config]="companyDetailConfig"
+  [visible]="detailVisible"
+  (closed)="closeDetail()"
+>
+</app-entity-detail>

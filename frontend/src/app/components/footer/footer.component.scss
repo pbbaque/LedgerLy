@@ -1,0 +1,14 @@
+@use 'variables' as v;
+
+.footer {
+  background-color: v.$color-primary;
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-family: v.$font-family-base;
+
+  &__text {
+    color: v.$white;
+    font-size: v.$font-size-sm;
+    font-weight: v.$font-weight-regular;
+  }
+}

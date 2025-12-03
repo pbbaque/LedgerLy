@@ -1,0 +1,146 @@
+<div class="page">
+  <app-alert
+    [message]="errorMessage"
+    type="error"
+    [visible]="errorVisible"
+    (closed)="errorVisible = false"
+  >
+  </app-alert>
+  <div class="page__header">
+    <h2 class="page__name">Listado de Usuarios</h2>
+    <p class="page__description">
+      Aquí puedes consultar todos los usuarios registrados en el sistema.
+    </p>
+  </div>
+
+  <div class="page__actions">
+    <div class="page__search">
+      <input
+        type="text"
+        class="search__input"
+        placeholder="Buscar usuario..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="searchUsers()"
+      />
+    </div>
+    <button class="btn btn--secondary" (click)="goToCreate()">
+      Añadir Usuario
+    </button>
+  </div>
+
+  <div class="page__content">
+    <div class="list__wrapper">
+      <app-pagination
+        *ngIf="filteredUsers.length > 0"
+        [currentPage]="currentPage"
+        [totalPages]="totalPages"
+        [itemsPerPage]="itemsPerPage"
+        [totalItems]="filteredUsers.length"
+        (pageChange)="onPageChange($event)"
+        (itemsPerPageChange)="onItemsPerPageChange($event)"
+      ></app-pagination>
+
+      <ul class="list">
+        <li *ngIf="paginatedUsers.length === 0" class="no-results">
+          No se encontraron usuarios.
+        </li>
+        <li
+          class="list__item"
+          *ngFor="let user of paginatedUsers"
+          (click)="openDetail(user)"
+        >
+          <p class="list__title">{{ user.id }} {{ user.username }}</p>
+          <p class="list__subtitle">{{ user.email }}</p>
+          <div class="list__actions">
+            <button
+              class="btn btn--warning"
+              (click)="goToEdit(user.id); $event.stopPropagation()"
+            >
+              Editar
+            </button>
+            <button
+              class="btn btn--error"
+              (click)="deleteUser(user); $event.stopPropagation()"
+              *ngIf="hasRole(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_COMPANY_SUPER_ADMIN', 'ROLE_COMPANY_ADMIN'])"
+            >
+              Eliminar
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="table__wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Empleado</th>
+            <th>Empresa</th>
+            <th class="table__actions-cell">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="paginatedUsers.length === 0">
+            <td colspan="6" class="no-results">No se encontraron usuarios.</td>
+          </tr>
+          <tr *ngFor="let user of paginatedUsers" (click)="openDetail(user)">
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              {{ user.employee?.name || "-" }}
+              {{ user.employee?.lastname || "-" }}
+            </td>
+            <td>{{ user.employee?.company?.name || "-" }}</td>
+            <td class="table__actions-cell">
+              <div class="table__actions">
+                <button
+                  class="btn btn--warning"
+                  (click)="goToEdit(user.id); $event.stopPropagation()"
+                >
+                  Editar
+                </button>
+                <button
+                  class="btn btn--error"
+                  (click)="deleteUser(user); $event.stopPropagation()"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <app-pagination
+        *ngIf="filteredUsers.length > 0"
+        [currentPage]="currentPage"
+        [totalPages]="totalPages"
+        [itemsPerPage]="itemsPerPage"
+        [totalItems]="filteredUsers.length"
+        (pageChange)="onPageChange($event)"
+        (itemsPerPageChange)="onItemsPerPageChange($event)"
+      ></app-pagination>
+    </div>
+  </div>
+</div>
+
+<app-confirm
+  [visible]="showConfirmDelete"
+  [message]="confirmMessage"
+  type="warning"
+  (confirmed)="confirmDelete()"
+  (cancelled)="cancelDelete()"
+>
+</app-confirm>
+
+<app-entity-detail
+  [entity]="selectedUser"
+  [config]="userDetailConfig"
+  [visible]="detailVisible"
+  (closed)="closeDetail()"
+>
+</app-entity-detail>

@@ -1,0 +1,36 @@
+<main class="auth">
+  <div class="auth__logo">
+    <h1 class="auth__logo__text">
+      Ledger<span class="auth__logo--accent">Ly</span>
+    </h1>
+  </div>
+  <p class="auth__text text_center">
+    ¿Olvidaste tu contraseña? Recupera el acceso
+  </p>
+
+  <form class="form" [formGroup]="forgotForm" (ngSubmit)="onSubmit()">
+    <div class="form__field">
+      <label for="email" class="form__label">Email</label>
+      <input
+        type="email"
+        class="form__input"
+        placeholder="Tu Email"
+        id="email"
+        formControlName="email"
+      />
+      <small class="form__error" *ngIf="email?.touched && email?.invalid">
+        <span *ngIf="email?.errors?.['required']">El email es obligatorio</span>
+        <span *ngIf="email?.errors?.['email']">Formato de email inválido</span>
+      </small>
+    </div>
+    <input type="submit" class="form__submit" value="Enviar Instrucciones" />
+  </form>
+  <div class="actions">
+    <a routerLink="/auth/login" class="actions__link"
+      >¿Ya tienes cuenta? Inicia Sesión</a
+    >
+    <a routerLink="/auth/register" class="actions__link"
+      >¿Aun no tienes cuenta? Da de alta tu empresa</a
+    >
+  </div>
+</main>

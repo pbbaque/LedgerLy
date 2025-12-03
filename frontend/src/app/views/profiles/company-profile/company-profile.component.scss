@@ -1,0 +1,65 @@
+@use "index" as *;
+
+.page {
+  @include container;
+
+  @include xl_desktop {
+    @include container-lg;
+  }
+
+  &__header {
+    margin-bottom: 2rem;
+  }
+
+  &__name {
+    @include page-name;
+  }
+
+  &__description {
+    @include page-description;
+  }
+
+  &__content {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    max-height: 40vh;
+    overflow-y: auto;
+
+    @include tablet {
+      max-height: 60vh;
+    }
+
+    @include xl_desktop {
+      max-height: 70vh;
+    }
+  }
+
+  .form__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .form__group--row {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    .form__field {
+      flex: 1;
+    }
+
+    @include tablet {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+}
+
+.address {
+  margin-top: 2rem;
+}

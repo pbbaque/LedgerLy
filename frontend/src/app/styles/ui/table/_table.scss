@@ -1,0 +1,115 @@
+@use "variables" as v;
+@use "mixins" as m;
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: v.$font-size-base;
+
+  @include m.tablet {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid v.$gray-300;
+  }
+
+  thead,
+  tbody {
+    @include m.tablet {
+      display: block;
+    }
+  }
+
+  thead {
+    @include m.tablet {
+      width: 100%;
+      overflow-y: scroll;
+      scrollbar-gutter: stable;
+      &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+    }
+  }
+
+  tbody {
+    @include m.tablet {
+      width: 100%;
+      max-height: calc(47vh - 55px);
+      overflow-y: scroll;
+      overflow-x: hidden;
+      &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+    }
+    @include m.xl_desktop {
+      max-height: calc(70vh - 90px);
+    }
+  }
+
+  tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  th,
+  td {
+    padding: 1.5rem;
+    text-align: center;
+    border-right: 1px solid v.$gray-300;
+    border-bottom: 1px solid v.$gray-300;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+
+    &:first-child {
+      border-left: 1px solid v.$gray-300;
+    }
+  }
+
+  th:first-child,
+  td:first-child {
+    width: 60px;
+  }
+
+  th {
+    background-color: v.$color-primary;
+    color: v.$white;
+    font-weight: v.$font-weight-bold;
+    border-top: 1px solid v.$gray-300;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: v.$gray-200;
+  }
+
+  tbody tr:hover {
+    background-color: lighten(v.$color-primary, 42%);
+  }
+
+  &__actions-cell {
+    width: 250px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 1.4rem;
+      width: auto;
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+  }
+
+  &__address-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

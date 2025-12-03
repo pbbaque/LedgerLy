@@ -1,0 +1,97 @@
+<div class="page">
+  <div class="page__header">
+    <h2 class="page__name">Panel de Control</h2>
+    <p class="page__description">
+      Resumen de facturación, clientes y productos.
+    </p>
+  </div>
+
+  <div class="dashboard__kpis dashboard__kpis--row">
+    <div class="kpi-card">
+      <div class="kpi-title">Total Facturado</div>
+      <div class="kpi-value">{{ totalInvoiced | currency }}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">Facturas del Mes</div>
+      <div class="kpi-value">{{ invoicesThisMonth }}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">Facturas de Hoy</div>
+      <div class="kpi-value">{{ invoicesToday }}</div>
+    </div>
+  </div>
+
+  <div class="page__content dashboard__layout">
+    <div class="dashboard__chart-panel">
+      <h4 class="chart-title">Evolución Mensual</h4>
+      <div class="dashboard__chart">
+        <canvas
+          baseChart
+          [type]="chartType"
+          [data]="chartData"
+          [options]="chartOptions">
+        </canvas>
+      </div>
+    </div>
+
+    <div class="dashboard__side-lists">
+      <div class="recent-list">
+        <h4>Últimas Facturas</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Total</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let f of latestInvoices">
+              <td>{{ f.id }}</td>
+              <td>{{ f.client.name }} {{ f.client.lastname }}</td>
+              <td>{{ f.total | currency }}</td>
+              <td>{{ f.date | date:'shortDate' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="recent-list">
+        <h4>Mejores Clientes</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Facturado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of topClients">
+              <td>{{ c.name }} {{ c.lastname }}</td>
+              <td>{{ c.totalInvoiced | currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="recent-list">
+        <h4>Más Vendidos</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Vendidos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of topProducts">
+              <td>{{ p.name }}</td>
+              <td>{{ p.quantitySold }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

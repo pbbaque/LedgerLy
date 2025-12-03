@@ -1,0 +1,170 @@
+<div class="page">
+  <app-alert
+    [message]="errorMessage"
+    type="error"
+    [visible]="errorVisible"
+    (closed)="errorVisible = false"
+  >
+  </app-alert>
+
+  <div class="page__header">
+    <h2 class="page__name">
+      {{ isEditMode ? "Editar Usuario" : "Nuevo Usuario" }}
+    </h2>
+    <p class="page__description">
+      {{
+        isEditMode
+          ? "Aquí puedes modificar los datos del usuario."
+          : "Aquí puedes registrar un nuevo usuario en el sistema."
+      }}
+    </p>
+  </div>
+
+  <div class="page__content">
+    <form class="form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="form__content">
+        <div class="form__group--row">
+          <div class="form__field">
+            <label for="username" class="form__label">Usuario</label>
+            <input
+              type="text"
+              class="form__input"
+              id="username"
+              placeholder="Nombre de usuario"
+              formControlName="username"
+            />
+            <small
+              class="form__error"
+              *ngIf="username?.touched && username?.invalid"
+            >
+              <span *ngIf="username?.errors?.['required']"
+                >El usuario es obligatorio</span
+              >
+            </small>
+          </div>
+          <div class="form__field">
+            <label for="email" class="form__label">Email</label>
+            <input
+              type="email"
+              class="form__input"
+              id="email"
+              placeholder="Email"
+              formControlName="email"
+            />
+            <small class="form__error" *ngIf="email?.touched && email?.invalid">
+              <span *ngIf="email?.errors?.['required']"
+                >El email es obligatorio</span
+              >
+              <span *ngIf="email?.errors?.['email']"
+                >Formato de email inválido</span
+              >
+            </small>
+          </div>
+        </div>
+        <div class="form__group--row">
+          <div class="form__field" *ngIf="!isEditMode">
+            <label for="password" class="form__label">Contraseña</label>
+            <input
+              type="password"
+              class="form__input"
+              id="password"
+              placeholder="Contraseña"
+              formControlName="password"
+            />
+            <small
+              class="form__error"
+              *ngIf="password?.touched && password?.invalid"
+            >
+              <span *ngIf="password?.errors?.['required']"
+                >La contraseña es obligatoria</span
+              >
+            </small>
+          </div>
+
+          <div class="form__field" *ngIf="!isEditMode">
+            <label for="repeat" class="form__label">Repite la contraseña</label>
+            <input
+              type="password"
+              class="form__input"
+              id="repeat"
+              placeholder="Repite la contraseña"
+              formControlName="repeat"
+            />
+          </div>
+        </div>
+        <div class="form__group--row" *ngIf="isEditMode">
+          <div class="form__field">
+            <label class="form__label">Empleado</label>
+            <input
+              type="text"
+              class="form__input"
+              [value]="
+                userForm.get('employee')?.value?.name &&
+                userForm.get('employee')?.value?.lastname
+                  ? userForm.get('employee')?.value.name +
+                    ' ' +
+                    userForm.get('employee')?.value.lastname +
+                    (userForm.get('employee')?.value.email
+                      ? ' (' + userForm.get('employee')?.value.email + ')'
+                      : '')
+                  : 'Sin empleado'
+              "
+              disabled
+            />
+          </div>
+
+          <div class="form__field">
+            <label class="form__label">Compañía</label>
+            <input
+              type="text"
+              class="form__input"
+              [value]="userForm.get('company')?.value?.name || 'Sin compañía'"
+              disabled
+            />
+          </div>
+        </div>
+        <div>
+          <h3 class="text-center form__label address">Roles</h3>
+          <div class="form__group--row roles-row">
+            <div
+              class="form__field-role"
+              *ngFor="let role of availableRoles; let i = index"
+            >
+              <label
+                class="role-option"
+                [class.disabled-role]="role.name === 'ROLE_USER'"
+                [title]="role.name"
+              >
+                <input
+                  type="checkbox"
+                  [checked]="
+                    rolesIds.includes(role.id) || role.name === 'ROLE_USER'
+                  "
+                  [disabled]="role.name === 'ROLE_USER'"
+                  (change)="onRoleChange($event, role)"
+                />
+                <span class="role-label">{{ getRoleLabel(role.name) }}</span>
+              </label>
+            </div>
+            <small *ngIf="rolesIds.length === 0" class="form__error">
+              Debes asignar al menos un rol
+            </small>
+          </div>
+        </div>
+        <div class="form__group--row">
+          <input
+            type="submit"
+            class="form__submit"
+            [value]="isEditMode ? 'Guardar Cambios' : 'Registrar Usuario'"
+          />
+          <input
+            type="button"
+            class="form__return"
+            value="Volver"
+            (click)="goBack()"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

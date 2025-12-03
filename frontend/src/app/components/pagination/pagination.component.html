@@ -1,0 +1,42 @@
+<div class="pagination">
+  <div class="pagination__info">
+    <span>Mostrando {{ startItem }} - {{ endItem }} de {{ totalItems }}</span>
+  </div>
+
+  <div class="pagination__controls">
+    <button 
+      class="pagination__btn pagination__btn--prev" 
+      [disabled]="currentPage === 1"
+      (click)="previousPage()">
+      ‹
+    </button>
+
+    <button 
+      *ngFor="let page of getPageNumbers()"
+      [class.pagination__btn--active]="page === currentPage"
+      [disabled]="page === -1"
+      class="pagination__btn"
+      (click)="goToPage(page)">
+      {{ page === -1 ? '...' : page }}
+    </button>
+
+    <button 
+      class="pagination__btn pagination__btn--next" 
+      [disabled]="currentPage === totalPages"
+      (click)="nextPage()">
+      ›
+    </button>
+  </div>
+
+  <div class="pagination__size">
+    <label for="pageSize">Por página:</label>
+    <select 
+      id="pageSize" 
+      [(ngModel)]="itemsPerPage"
+      (change)="onItemsPerPageChange($event)">
+      <option *ngFor="let size of pageSizeOptions" [value]="size">
+        {{ size }}
+      </option>
+    </select>
+  </div>
+</div>

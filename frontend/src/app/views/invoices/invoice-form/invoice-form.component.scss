@@ -1,0 +1,145 @@
+@use "index" as *;
+
+.page {
+  @include container;
+
+  @include xl_desktop {
+    @include container-lg;
+  }
+
+  &__header {
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+
+  &__content {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    max-height: 40vh;
+    overflow-y: auto;
+
+    @include tablet {
+      max-height: 55vh;
+    }
+
+    @include xl_desktop {
+      max-height: 70vh;
+    }
+  }
+
+  .invoice-form {
+    background: $white;
+    @include shadow;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+
+    .form__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+
+      @include tablet {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .full {
+        grid-column: 1 / -1;
+      }
+    }
+
+    .form__group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      label {
+        font-size: $font-size-sm;
+        color: $gray-600;
+      }
+
+      select,
+      input,
+      textarea {
+        padding: 0.75rem;
+        border: 1px solid $gray-300;
+        border-radius: 0.5rem;
+        font-size: $font-size-sm;
+      }
+
+      textarea {
+        min-height: 80px;
+        resize: vertical;
+      }
+    }
+
+    h3 {
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .invoice-details {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 0.75rem;
+
+      thead th {
+        text-align: left;
+        padding: 0.65rem;
+        font-size: $font-size-sm;
+        color: $gray-600;
+      }
+
+      tbody td {
+        padding: 0.5rem;
+        border-top: 1px solid $gray-100;
+      }
+
+      select,
+      input {
+        width: 100%;
+      }
+    }
+
+    .details-actions {
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .invoice-summary-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      text-align: right;
+
+      .invoice-total {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-lg;
+        color: $color-primary;
+      }
+    }
+
+    .form__actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+    }
+  }
+}
+
+.btn {
+  @include button($color-primary, $white);
+
+  &--secondary {
+    @include button($color-secondary, $white);
+  }
+  &--error {
+    @include button($color-error, $white);
+  }
+}
