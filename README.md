@@ -1,112 +1,147 @@
-# LedgerLy — InvoiceManager
+# LedgerLy
 
-[![Frontend](https://img.shields.io/badge/Frontend-Angular-red)](frontend/README.md)
-[![Backend](https://img.shields.io/badge/Backend-Spring%20Boot-green)](backend/README.md)
-[![License](https://img.shields.io/badge/License-MIT-blue)](#license)
+LedgerLy is a full-stack web application for invoice and business operations management. It combines an Angular frontend with a Spring Boot REST API to manage companies, clients, employees, products, users and invoices in a role-based environment.
 
-**LedgerLy** es un sistema de facturación multiempresa completo, que combina un **backend con Spring Boot** y un **frontend con Angular**, integrando la gestión de empresas, clientes, empleados, productos, facturas y usuarios en un entorno seguro y escalable.
+This repository is organized as a monorepo:
 
-Este repositorio es un **monorepo**, lo que significa que el **frontend y backend se encuentran juntos**, manteniendo su historial de commits original y sus README independientes.
+```text
+frontend/  Angular application
+backend/   Spring Boot API
+```
 
----
+## Tech Stack
 
-## 📂 Estructura del repositorio
+| Layer | Technologies |
+| --- | --- |
+| Frontend | Angular 20, TypeScript, RxJS, SCSS, Chart.js, ng2-charts, Swiper |
+| Backend | Java 23, Spring Boot 3.5, Spring Security, JWT, Spring Data JPA, Maven |
+| Database | MySQL |
+| Tooling | npm, Maven Wrapper |
 
-/frontend → Código y documentación del frontend (Angular)
-/backend → Código y documentación del backend (Spring Boot)
+## Main Features
 
-yaml
-Copiar código
+- JWT authentication and role-based access control.
+- Dashboard with invoice KPIs and business summaries.
+- CRUD flows for companies, clients, employees, products, users and invoices.
+- Multi-company data model with permission checks in the backend.
+- Modular Angular structure with feature modules, guards, interceptors and reusable UI components.
+- Layered backend structure with controllers, services, repositories, validators and orchestrators.
 
-- **frontend/**: Aplicación web desarrollada en Angular 20.  
-  Modular y escalable, con autenticación JWT y comunicación vía REST con el backend.  
-  Incluye módulos por dominio, componentes reutilizables y servicios centralizados.  
-  [Ver README del frontend](frontend/README.md)
+## Project Status
 
-- **backend/**: API REST desarrollada en Spring Boot 3.5.7 y Java 23.  
-  Gestiona la lógica de negocio, persistencia (MySQL), seguridad (JWT) y arquitectura modular por capas.  
-  [Ver README del backend](backend/README.md)
+LedgerLy is a portfolio demo project. The main application flow is implemented and the project is suitable for local review or demo deployment after configuring the database and environment variables. Some areas, such as automated test coverage and production deployment automation, are intentionally kept minimal.
 
----
+## Requirements
 
-## ⚙️ Tecnologías principales
+- Node.js 22 or compatible version.
+- npm 10 or compatible version.
+- Java 23.
+- MySQL 8.
+- Maven Wrapper, included in `backend/`.
 
-| Parte      | Tecnologías |
-|------------|------------|
-| Frontend   | Angular 20, TypeScript, RxJS, Chart.js, SCSS modular |
-| Backend    | Spring Boot 3.5.7, Java 23, Spring Security + JWT, Spring Data JPA/Hibernate, MySQL 8, Maven |
-| Herramientas | Node.js 22, npm 10, jwt-decode, Swiper, ng2-charts |
+## Backend Setup
 
----
+Create a local Spring configuration from the example file:
 
-## 🔐 Autenticación y roles
-
-- El sistema utiliza **JWT** para autenticar usuarios.  
-- Los roles disponibles incluyen:
-  - `ROLE_SUPER_ADMIN` — Acceso total
-  - `ROLE_COMPANY_SUPER_ADMIN` — Administración completa dentro de su empresa
-  - `ROLE_COMPANY_ADMIN` — Gestión operativa de facturas, clientes y productos
-  - `ROLE_ADMIN` — Acceso administrativo limitado
-  - `ROLE_USER` — Acceso estándar a sus recursos
-
----
-
-## 🌐 Integración Frontend – Backend
-
-- El frontend se comunica con el backend vía REST API (`environment.apiUrl = 'http://localhost:8080/api'`).  
-- Funcionalidades cubiertas:
-  - CRUD completo de clientes, productos, empleados, empresas, facturas y usuarios
-  - Autenticación y autorización
-  - Estadísticas y dashboards
-- Cada carpeta (`frontend` y `backend`) mantiene su historial de commits y README específico para detalles de instalación y configuración.
-
----
-
-## 🚀 Ejecución del proyecto
-
-### Backend (Spring Boot)
 ```bash
 cd backend
-mvn clean install
-mvn spring-boot:run
-La API estará disponible en: http://localhost:8080/api
+cp src/main/resources/application-example.properties src/main/resources/application.properties
+```
 
-Frontend (Angular)
-bash
-Copiar código
+Configure the required values:
+
+```properties
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=ledgerly
+DB_USERNAME=root
+DB_PASSWORD=your_password
+JWT_SECRET=your_base64_encoded_secret
+```
+
+Run the API:
+
+```bash
+cd backend
+./mvnw spring-boot:run
+```
+
+The API runs at:
+
+```text
+http://localhost:8080/api
+```
+
+## Frontend Setup
+
+Install dependencies and start the Angular app:
+
+```bash
 cd frontend
 npm install
-ng serve
-La aplicación Angular estará disponible en: http://localhost:4200
+npm start
+```
 
-🧩 Estructura y Arquitectura
-Backend
-Arquitectura modular por capas (controllers, services, repositories, security, validators)
+The frontend runs at:
 
-Autenticación JWT
+```text
+http://localhost:4200
+```
 
-Gestión multiempresa con validación de permisos por usuario
+The frontend expects the backend API at:
 
-Orchestrators para operaciones complejas
+```text
+http://localhost:8080/api
+```
 
-Frontend
-Arquitectura modular basada en feature modules
+## Useful Commands
 
-Componentes reutilizables y layouts centralizados
+Frontend:
 
-SCSS modularizado y atomic CSS
+```bash
+npm start
+npm run build
+npm test
+```
 
-Guards y interceptors para control de acceso y JWT
+Backend:
 
-💡 Próximas mejoras
-Implementación de pruebas unitarias (JUnit, Jasmine/Karma)
+```bash
+./mvnw spring-boot:run
+./mvnw test
+```
 
-Internacionalización (i18n)
+## Environment Variables
 
-Temas dinámicos (modo claro/oscuro)
+The backend requires database credentials and a JWT secret. See:
 
-Dashboards más completos e interactivos
+```text
+backend/.env.example
+backend/src/main/resources/application-example.properties
+```
 
-🧾 Licencia
-Este proyecto está bajo la licencia MIT.
-Consulta el archivo LICENSE para más información.
+Email and OAuth settings are optional for local demo unless password recovery or Google login are being tested.
+
+## Deployment Recommendation
+
+For a free portfolio demo:
+
+- Frontend: Vercel or Netlify.
+- Backend: Render, Railway or Fly.io.
+- Database: a managed MySQL-compatible service supported by the selected backend host.
+
+For public deployment, configure HTTPS, production CORS origins, a strong JWT secret and real environment variables instead of local files.
+
+## Demo Checklist
+
+- Backend starts with a clean database configuration.
+- Frontend builds successfully.
+- Login flow works with a demo user.
+- Dashboard loads without console errors.
+- Main CRUD screens open correctly.
+- Empty states and error states are acceptable for a public demo.
+- README reflects the actual setup and limitations.
+
+## License
+
+This project is distributed under the MIT License. See `LICENSE` for details.

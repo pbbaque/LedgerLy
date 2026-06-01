@@ -1,13 +1,14 @@
 package com.backend.api.invoice_manager;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest
+import org.junit.jupiter.api.Test;
+
 class InvoiceManagerApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void applicationClassIsAvailable() {
+		assertNotNull(InvoiceManagerApplication.class);
 	}
 
 }

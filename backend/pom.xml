@@ -12,7 +12,7 @@
 	<artifactId>invoice-manager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>invoice-manager</name>
-	<description>Demo project for Spring Boot</description>
+	<description>LedgerLy backend API for invoice and business operations management</description>
 	<url/>
 	<licenses>
 		<license/>

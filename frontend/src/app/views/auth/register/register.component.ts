@@ -44,7 +44,7 @@ export class RegisterComponent {
     const company = this.buildCompanyFromForm();
 
     this.companyService.registerCompany(company).subscribe({
-      next: (response) => {
+      next: () => {
         alert('Empresa registrada con éxito');
         this.router.navigate(['/auth/login']);
       },

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { componentTestImports, componentTestProviders, componentTestSchemas } from '../../../../test-support';
 
 import { UserFormComponent } from './user-form.component';
 
@@ -8,6 +9,9 @@ describe('UserFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: componentTestImports,
+      providers: componentTestProviders,
+      schemas: componentTestSchemas,
       declarations: [UserFormComponent]
     })
     .compileComponents();

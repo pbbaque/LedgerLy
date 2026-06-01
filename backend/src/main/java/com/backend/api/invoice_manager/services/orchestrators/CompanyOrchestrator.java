@@ -136,7 +136,6 @@ public class CompanyOrchestrator {
         admin.setEnabled(true);
         admin.setRoles(List.of(roleRepository.findByName("ROLE_COMPANY_SUPER_ADMIN").orElseThrow(
                 () -> new NotFoundException("Role", "name", "ROLE_COMPANY_SUPER_ADMIN"))));
-        System.out.println("Admin user created for company: " + admin.getUsername());
         return userService.save(admin);
     }
 

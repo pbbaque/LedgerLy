@@ -80,8 +80,6 @@ public class EmployeeController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Employee employee) {
-        System.out.println(employee.getUser().getUsername());
-
         Employee createdEmployee = orchestrator.create(employee);
         ApiResponse<Employee> response = new ApiResponse<>("Employee created successfully.", createdEmployee,
                 HttpStatus.CREATED.value(), true);

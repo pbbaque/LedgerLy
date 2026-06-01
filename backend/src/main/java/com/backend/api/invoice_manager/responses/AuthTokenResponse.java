@@ -25,7 +25,7 @@ public class AuthTokenResponse {
         Map<String, Object> body = new HashMap<>();
         body.put("token", token);
         body.put("data", user);
-        body.put("message", String.format("Login successfull %s!!", user.getUsername()));
+        body.put("message", String.format("Login successful %s", user.getUsername()));
         body.put("statusCode", HttpStatus.OK.value());
         body.put("success", true);
 
