@@ -80,7 +80,7 @@ export class ClientFormComponent implements OnInit {
   }
 
   loadCompanies(): void {
-    this.companyService.findAll().subscribe({
+    this.companyService.findAvailableForCurrentUser().subscribe({
       next: (companies: Company[]) => this.companies = companies,
       error: (error: HttpErrorResponse) => {
         this.errorMessage = error.message || 'Error al cargar las compañías';

@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   
   loginForm!: FormGroup;
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder, 
@@ -59,6 +60,10 @@ export class LoginComponent implements OnInit {
         alert('Error al iniciar sesión: ' + message);
       }
     });
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
   get email() {

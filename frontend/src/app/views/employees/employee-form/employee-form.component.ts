@@ -92,7 +92,7 @@ export class EmployeeFormComponent {
   }
 
   loadCompanies(): void {
-    this.companyService.findAll().subscribe({
+    this.companyService.findAvailableForCurrentUser().subscribe({
       next: companies => (this.companies = companies),
       error: (error: HttpErrorResponse) => {
         this.errorMessage = error.message || 'Error al cargar las compañías';

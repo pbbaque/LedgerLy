@@ -36,15 +36,23 @@
           <td>{{ d.product.name }}</td>
           <td>{{ d.quantity }}</td>
           <td>{{ d.unitPrice | currency }}</td>
-          <td>{{ d.amount | currency }}</td>
+          <td>{{ (d.quantity * d.unitPrice) | currency }}</td>
         </tr>
       </tbody>
     </table>
   </section>
 
   <section class="invoice-detail-page__totals">
+    <div class="total-row">
+      <span>Base imponible:</span>
+      <strong>{{ subtotal | currency }}</strong>
+    </div>
+    <div class="total-row">
+      <span>IVA (21%):</span>
+      <strong>{{ tax | currency }}</strong>
+    </div>
     <div class="total-row total-row--highlight">
-      <span>Total:</span>
+      <span>Total factura:</span>
       <strong>{{ invoice.total | currency }}</strong>
     </div>
   </section>

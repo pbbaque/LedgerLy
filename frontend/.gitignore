@@ -40,6 +40,9 @@ ehthumbs.db
 Icon?
 Desktop.ini
 
+!src/assets/icons/
+!src/assets/icons/*.svg
+
 # --------------------------------------
 # Sass / SCSS cache
 # --------------------------------------

@@ -89,9 +89,20 @@
     text-align: right;
     font-size: $font-size-md;
 
-    .total-row strong {
-      color: $color-primary;
-      font-size: $font-size-lg;
+    .total-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 2rem;
+      margin: 0.25rem 0;
+
+      &--highlight {
+        margin-top: 0.75rem;
+
+        strong {
+          color: $color-primary;
+          font-size: $font-size-lg;
+        }
+      }
     }
   }
 

@@ -4,6 +4,7 @@ import { Company } from '../models/company';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { environment } from '../../environments/environments';
 import { ApiResponse } from '../models/api-response';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class CompanyService {
   private apiUrl: string = environment.apiUrl + '/companies';
   private headers = { 'Content-Type': 'application/json' };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   findAll(): Observable<Company[]> {
     return this.http.get<ApiResponse<Company[]>>(`${this.apiUrl}`, { headers: this.headers }).pipe(
@@ -24,6 +25,24 @@ export class CompanyService {
       }),
       catchError(error => {
         console.error('Error en findAll', error);
+        return throwError(() => new Error(error.message || 'Error en la solicitud'));
+      })
+    );
+  }
+
+  findAvailableForCurrentUser(): Observable<Company[]> {
+    if (this.authService.hasRole('ROLE_SUPER_ADMIN') || this.authService.hasRole('ROLE_ADMIN')) {
+      return this.findAll();
+    }
+
+    return this.http.get<ApiResponse<Company>>(`${this.apiUrl}/current`, { headers: this.headers }).pipe(
+      map(response => {
+        if (!response.success)
+          throw new Error(response.message || 'Error desconocido al obtener la empresa actual');
+        return response.data ? [response.data] : [];
+      }),
+      catchError(error => {
+        console.error('Error en findAvailableForCurrentUser', error);
         return throwError(() => new Error(error.message || 'Error en la solicitud'));
       })
     );

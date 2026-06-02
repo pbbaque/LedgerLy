@@ -82,9 +82,9 @@
       </div>
 
       <div class="invoice-summary-bottom">
-        <div>Subtotal: {{ subtotal | currency }}</div>
-        <div>Impuestos: {{ tax | currency }}</div>
-        <div class="invoice-total">Total: {{ totalInvoice | currency }}</div>
+        <div>Base imponible: {{ subtotal | currency }}</div>
+        <div>IVA (21%): {{ tax | currency }}</div>
+        <div class="invoice-total">Total factura: {{ totalInvoice | currency }}</div>
       </div>
 
       <div class="form__actions">

@@ -11,9 +11,9 @@ import { Employee } from '../../../models/employee';
 
 import { InvoiceService } from '../../../services/invoice.service';
 import { ProductService } from '../../../services/product.service';
-import { CompanyService } from '../../../services/company.service';
 import { ClientService } from '../../../services/client.service';
 import { EmployeeService } from '../../../services/employee.service';
+import { CompanyService } from '../../../services/company.service';
 
 @Component({
     selector: 'app-invoice-form',
@@ -49,18 +49,19 @@ export class InvoiceFormComponent implements OnInit {
   constructor(
     private invoiceService: InvoiceService,
     private productService: ProductService,
-    private companyService: CompanyService,
     private clientService: ClientService,
     private employeeService: EmployeeService,
+    private companyService: CompanyService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.loadLookups();
     const id = this.route.snapshot.paramMap.get('id');
+    this.isEdit = !!id;
+    this.loadLookups();
+
     if (id) {
-      this.isEdit = true;
       this.loadInvoice(+id);
     } else {
       this.addDetail(); // start with one detail line
@@ -70,7 +71,16 @@ export class InvoiceFormComponent implements OnInit {
 
   private loadLookups(): void {
     this.productService.findAll().subscribe({ next: p => this.products = p, error: e => this.handleError(e) });
-    this.companyService.findAll().subscribe({ next: c => this.companies = c, error: e => this.handleError(e) });
+    this.companyService.findAvailableForCurrentUser().subscribe({
+      next: companies => {
+        this.companies = companies;
+        if (!this.isEdit) {
+          this.invoice.company = companies[0] || {} as Company;
+          this.onCompanyChange();
+        }
+      },
+      error: e => this.handleError(e)
+    });
     this.clientService.findAll().subscribe({ next: c => this.clients = c, error: e => this.handleError(e) });
     this.employeeService.findAll().subscribe({ next: e => this.employees = e, error: e => this.handleError(e) });
   }
@@ -87,7 +97,7 @@ export class InvoiceFormComponent implements OnInit {
         const selectedCompanyId = this.invoice.company?.id;
 
         // Mapear la compañía del listado general
-        this.invoice.company = this.companies.find(c => c.id === selectedCompanyId) || {} as Company;
+        this.invoice.company = this.companies.find(c => c.id === selectedCompanyId) || this.invoice.company || {} as Company;
 
         if (selectedCompanyId) {
           // Cargar clientes, empleados y productos filtrados por la compañía

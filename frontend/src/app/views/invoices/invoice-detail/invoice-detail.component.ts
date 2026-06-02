@@ -15,6 +15,17 @@ export class InvoiceDetailComponent {
   @Output() edit = new EventEmitter<Invoice>();
   @Output() print = new EventEmitter<Invoice>();
 
+  get subtotal(): number {
+    return this.invoice?.details?.reduce(
+      (sum, detail) => sum + ((detail.quantity || 0) * (detail.unitPrice || 0)),
+      0
+    ) || 0;
+  }
+
+  get tax(): number {
+    return (this.invoice?.total || 0) - this.subtotal;
+  }
+
   close() {
     this.closed.emit();
   }

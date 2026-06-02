@@ -78,11 +78,7 @@ export class InvoiceListComponent implements OnInit {
   }
 
   private loadLookups(): void {
-    const userRoles = this.authService.getRoles();
-
-    if (userRoles.includes('SUPER_ADMIN') || userRoles.includes('ADMIN')) {
-      this.companyService.findAll().subscribe({ next: c => this.companies = c, error: e => this.handleError(e) });
-    }
+    this.companyService.findAvailableForCurrentUser().subscribe({ next: c => this.companies = c, error: e => this.handleError(e) });
     this.clientService.findAll().subscribe({ next: c => this.clients = c, error: e => this.handleError(e) });
     this.employeeService.findAll().subscribe({ next: e => this.employees = e, error: e => this.handleError(e) });
   }

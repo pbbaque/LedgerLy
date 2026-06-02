@@ -22,7 +22,7 @@
             <th>Producto</th>
             <th>Cant.</th>
             <th>Precio U.</th>
-            <th>Importe</th>
+            <th>Subtotal</th>
           </tr>
         </thead>
         <tbody>
@@ -30,7 +30,7 @@
             <td>{{ d.product.name }}</td>
             <td>{{ d.quantity }}</td>
             <td>{{ d.unitPrice | currency }}</td>
-            <td>{{ d.amount | currency }}</td>
+            <td>{{ (d.quantity * d.unitPrice) | currency }}</td>
           </tr>
         </tbody>
       </table>
@@ -38,7 +38,15 @@
 
     <section class="invoice-detail__totals">
       <div class="total-row">
-        <span>Total:</span>
+        <span>Base imponible:</span>
+        <strong>{{ subtotal | currency }}</strong>
+      </div>
+      <div class="total-row">
+        <span>IVA (21%):</span>
+        <strong>{{ tax | currency }}</strong>
+      </div>
+      <div class="total-row total-row--highlight">
+        <span>Total factura:</span>
         <strong>{{ invoice!.total | currency }}</strong>
       </div>
     </section>
