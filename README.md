@@ -29,7 +29,9 @@ backend/   Spring Boot API
 
 ## Project Status
 
-LedgerLy is a portfolio demo project. The main application flow is implemented and the project is suitable for local review or demo deployment after configuring the database and environment variables. Some areas, such as automated test coverage and production deployment automation, are intentionally kept minimal.
+LedgerLy is a portfolio demo project, not a production SaaS product. The main application flow is implemented and the project is suitable for local review, technical evaluation and recorded demos after configuring the database and environment variables.
+
+The current demo setup includes frontend and backend tests covering core UI behavior, service access rules, JWT handling, permission checks and utility classes. Production deployment automation, payment integrations and advanced enterprise hardening are intentionally out of scope.
 
 ## Requirements
 
@@ -53,11 +55,16 @@ Configure the required values:
 ```properties
 DB_HOST=localhost
 DB_PORT=3306
-DB_NAME=ledgerly
+DB_NAME=invoice_manager
 DB_USERNAME=root
 DB_PASSWORD=your_password
 JWT_SECRET=your_base64_encoded_secret
+SPRING_PROFILES_ACTIVE=invoice
+JPA_SHOW_SQL=true
+JPA_HIBERNATE_DDL_AUTO=validate
 ```
+
+`application.properties` is intentionally ignored by Git. Keep real local credentials and JWT secrets out of version control.
 
 Run the API:
 
@@ -66,10 +73,10 @@ cd backend
 ./mvnw spring-boot:run
 ```
 
-The API runs at:
+For the local portfolio demo, the API runs at:
 
 ```text
-http://localhost:8080/api
+http://localhost:8081/api
 ```
 
 ## Frontend Setup
@@ -91,7 +98,7 @@ http://localhost:4200
 The frontend expects the backend API at:
 
 ```text
-http://localhost:8080/api
+http://localhost:8081/api
 ```
 
 ## Useful Commands
@@ -101,7 +108,7 @@ Frontend:
 ```bash
 npm start
 npm run build
-npm test
+npm test -- --watch=false --browsers=ChromeHeadless
 ```
 
 Backend:
@@ -109,7 +116,21 @@ Backend:
 ```bash
 ./mvnw spring-boot:run
 ./mvnw test
+./mvnw package
 ```
+
+## Testing
+
+Current verification status:
+
+| Area | Command | Current Result |
+| --- | --- | --- |
+| Frontend tests | `npm test -- --watch=false --browsers=ChromeHeadless` | 39 passing tests |
+| Frontend build | `npm run build` | Builds successfully |
+| Backend tests | `./mvnw test` | 14 passing tests |
+| Backend package | `./mvnw package` | Builds the Spring Boot JAR successfully |
+
+The test suite focuses on portfolio-relevant behavior: Angular component rendering, password visibility toggle, company access by user role, invoice subtotal/tax calculations, JWT generation/validation, permission checks and backend utility classes.
 
 ## Environment Variables
 
@@ -134,7 +155,7 @@ For public deployment, configure HTTPS, production CORS origins, a strong JWT se
 
 ## Demo Checklist
 
-- Backend starts with a clean database configuration.
+- Backend starts with local database configuration on port `8081`.
 - Frontend builds successfully.
 - Login flow works with a demo user.
 - Dashboard loads without console errors.
